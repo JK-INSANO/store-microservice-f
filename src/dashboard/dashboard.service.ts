@@ -12,27 +12,27 @@ export class DashboardService {
     private readonly reviewsService: ReviewsService,
   ) {}
 
-  async getStats(): Promise<DashboardStatsDto> {
+  async getStatsForUser(user_id: string): Promise<DashboardStatsDto> {
     const [
       totalProducts,
-      pendingOrders,
-      completedOrders,
-      totalRevenue,
-      averageRating,
+      //pendingOrders,
+      //completedOrders,
+      //totalRevenue,
+      //averageRating,
     ] = await Promise.all([
-      this.productsService.getTotalProducts(),
-      this.ordersService.getPendingOrdersCount(),
-      this.ordersService.getCompletedOrdersCount(),
-      this.ordersService.getTotalRevenue(),
-      this.reviewsService.getAverageRating(),
+      this.productsService.getTotalProductsByUserId(user_id).then(products => products.length),
+      //this.ordersService.getPendingOrdersCountByUserId(user_id),
+      //this.ordersService.getCompletedOrdersCountByUserId(user_id),
+      //this.ordersService.getTotalRevenueByUserId(user_id),
+      //this.reviewsService.getAverageRatingByUserId(user_id),
     ]);
 
     return {
       totalProducts,
-      pendingOrders,
-      completedOrders,
-      totalRevenue,
-      averageRating,
+      //pendingOrders,
+      //completedOrders,
+      //totalRevenue,
+      //averageRating,
     };
   }
 }

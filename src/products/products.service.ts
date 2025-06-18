@@ -102,9 +102,9 @@ export class ProductsService {
     return this.productModel.countDocuments({ isActive: true }).exec();
   }
 
-  async getproductsByUserId(user_id: string): Promise<Product[]> {
+  async getTotalProductsByUserId(user_id: string): Promise<Product[]> {
     const products = await this.productModel.find({ user_id }).exec();
-    if (!products || products.length === 0) {
+    if (!products) {
       throw new NotFoundException(`No products found for user ID ${user_id}`);
     }
     return products;

@@ -1,5 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Controller, Get, Param } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { DashboardService } from './dashboard.service';
 import { DashboardStatsDto } from './dto/dashboard-stats.dto';
 
@@ -8,14 +8,15 @@ import { DashboardStatsDto } from './dto/dashboard-stats.dto';
 export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) {}
 
-  @Get()
-  @ApiOperation({ summary: 'Obtener estadísticas de la tienda' })
+  @Get(':user_id')
+  @ApiOperation({ summary: 'Obtener estadísticas de la tienda para un usuario' })
+  @ApiParam({ name: 'user_id', description: 'ID del usuario' })
   @ApiResponse({ 
     status: 200, 
     description: 'Estadísticas obtenidas exitosamente',
     type: DashboardStatsDto,
   })
-  getStats(): Promise<DashboardStatsDto> {
-    return this.dashboardService.getStats();
+  getStatsForUser(@Param('user_id') user_id: string): Promise<DashboardStatsDto> {
+    return this.dashboardService.getStatsForUser(user_id);
   }
 }
