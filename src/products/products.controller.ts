@@ -56,6 +56,15 @@ export class ProductsController {
     return this.productsService.findOne(id);
   }
 
+  @Get('user/:user_id')
+  @ApiOperation({ summary: 'Obtener todos los productos de un usuario específico' })
+  @ApiParam({ name: 'user_id', description: 'ID del usuario' })
+  @ApiResponse({ status: 200, description: 'Productos encontrados' })
+  @ApiResponse({ status: 404, description: 'No se encontraron productos' })
+  findByUserId(@Param('user_id') user_id: string) {
+    return this.productsService.findByUserId(user_id);
+  }
+
   @Patch(':id')
   @ApiOperation({ summary: 'Actualizar un producto existente' })
   @ApiParam({ name: 'id', description: 'ID del producto' })

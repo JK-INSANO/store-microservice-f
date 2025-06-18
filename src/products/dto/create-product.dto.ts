@@ -50,6 +50,11 @@ class NutritionalInfoDto {
 }
 
 export class CreateProductDto {
+
+  @ApiProperty({ description: 'ID del usuario' })
+  @IsString()
+  user_id: string;
+
   @ApiProperty({ description: 'Nombre del producto' })
   @IsString()
   name: string;

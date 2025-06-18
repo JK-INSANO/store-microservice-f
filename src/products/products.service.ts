@@ -74,6 +74,11 @@ export class ProductsService {
     return product;
   }
 
+  async findByUserId(user_id: string): Promise<Product[]> {
+    const products = await this.productModel.find({ user_id }).exec();
+    return products;
+  }
+
   async update(id: string, updateProductDto: UpdateProductDto): Promise<Product> {
     const updatedProduct = await this.productModel
       .findByIdAndUpdate(id, updateProductDto, { new: true })
@@ -95,5 +100,13 @@ export class ProductsService {
 
   async getTotalProducts(): Promise<number> {
     return this.productModel.countDocuments({ isActive: true }).exec();
+  }
+
+  async getproductsByUserId(user_id: string): Promise<Product[]> {
+    const products = await this.productModel.find({ user_id }).exec();
+    if (!products || products.length === 0) {
+      throw new NotFoundException(`No products found for user ID ${user_id}`);
+    }
+    return products;
   }
 }
