@@ -5,6 +5,10 @@ export type SupplierDocument = Supplier & Document;
 
 @Schema({ timestamps: true })
 export class Supplier {
+
+  @Prop({ required: true })
+  user_id: string;
+  
   @Prop({ required: true })
   name: string;
 

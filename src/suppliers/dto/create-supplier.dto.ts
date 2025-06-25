@@ -2,6 +2,10 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsString, IsEmail, IsArray, IsOptional } from 'class-validator';
 
 export class CreateSupplierDto {
+  @ApiProperty({ description: 'ID del usuario' })
+  @IsString()
+  user_id: string;
+  
   @ApiProperty({ description: 'Nombre del proveedor' })
   @IsString()
   name: string;

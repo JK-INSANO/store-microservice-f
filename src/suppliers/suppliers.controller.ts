@@ -36,6 +36,12 @@ export class SuppliersController {
   remove(@Param('id') id: string) {
     return this.suppliersService.remove(id);
   }
+
+  @Get('user/:user_id')
+  @ApiOperation({ summary: 'Obtener todos los proveedores de un usuario específico' })
+  findByUserId(@Param('user_id') user_id: string) {
+    return this.suppliersService.findByUserId(user_id);
+  }
 }
 
 

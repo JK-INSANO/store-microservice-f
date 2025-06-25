@@ -22,7 +22,7 @@ export class SuppliersService {
     data: Supplier[];
     pagination: PaginationResponseDto;
   }> {
-    const { page = 1, limit = 10, search } = queryDto;
+    const { page = 1, limit = 10, search, user_id } = queryDto;
     const skip = (page - 1) * limit;
 
     // Build filter
@@ -30,6 +30,11 @@ export class SuppliersService {
     
     if (search) {
       filter.name = { $regex: search, $options: 'i' };
+    }
+    
+    // Añadir filtro por user_id si está presente
+    if (user_id) {
+      filter.user_id = user_id;
     }
 
     // Execute queries
@@ -84,6 +89,12 @@ export class SuppliersService {
       throw new NotFoundException(`Supplier with ID ${id} not found`);
     }
   }
+
+  // Añadir método para buscar proveedores por user_id
+  async findByUserId(user_id: string): Promise<Supplier[]> {
+    return this.supplierModel.find({ user_id }).exec();
+  }
 }
+
 
 

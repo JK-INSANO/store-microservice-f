@@ -8,8 +8,12 @@ export class QuerySupplierDto extends PaginationDto {
   @IsString()
   search?: string;
   
-  // Eliminamos el campo storeId
+  @ApiPropertyOptional({ description: 'ID del usuario propietario' })
+  @IsOptional()
+  @IsString()
+  user_id?: string;
 }
+
 
 
 
