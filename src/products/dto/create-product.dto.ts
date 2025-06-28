@@ -9,6 +9,7 @@ import {
   ValidateNested,
   Min,
   IsPositive,
+  IsNotEmpty,
 } from 'class-validator';
 
 class DeliveryOptionsDto {
@@ -54,6 +55,11 @@ export class CreateProductDto {
   @ApiProperty({ description: 'ID del usuario' })
   @IsString()
   user_id: string;
+
+  @ApiProperty({ description: 'Nombre de la tienda', required: true })
+  @IsString()
+  @IsNotEmpty({ message: 'El nombre de la tienda es obligatorio' })
+  store_name: string;
 
   @ApiProperty({ description: 'Nombre del producto' })
   @IsString()
