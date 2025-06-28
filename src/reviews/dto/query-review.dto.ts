@@ -7,4 +7,9 @@ export class QueryReviewDto extends PaginationDto {
   @IsOptional()
   @IsString()
   productId?: string;
+
+  @ApiPropertyOptional({ description: 'Filtrar por ID de la tienda' })
+  @IsOptional()
+  @IsString()
+  storeId?: string;
 }

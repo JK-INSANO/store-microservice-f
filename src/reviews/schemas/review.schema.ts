@@ -14,6 +14,12 @@ export class Review {
   @Prop({ required: true })
   productName: string;
 
+  @Prop({ required: true })
+  store_name: string;
+
+  @Prop({ required: true })
+  store_id: string;  // ID del dueño de la tienda (user_id)
+
   @Prop({ required: true, min: 1, max: 5 })
   rating: number;
 
