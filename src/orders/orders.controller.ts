@@ -18,6 +18,7 @@ import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
 import { QueryOrderDto } from './dto/query-order.dto';
+import { PaginationDto } from '../common/dto/pagination.dto';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -62,5 +63,27 @@ export class OrdersController {
     @Body() updateOrderStatusDto: UpdateOrderStatusDto,
   ) {
     return this.ordersService.updateStatus(id, updateOrderStatusDto);
+  }
+
+  @Get('available-for-delivery')
+  @ApiOperation({ summary: 'Obtener órdenes disponibles para entrega' })
+  @ApiResponse({ status: 200, description: 'Lista de órdenes disponibles obtenida exitosamente' })
+  @ApiQuery({ name: 'page', required: false, description: 'Número de página' })
+  @ApiQuery({ name: 'limit', required: false, description: 'Elementos por página' })
+  getAvailableForDelivery(@Query() queryDto: PaginationDto) {
+    return this.ordersService.getAvailableForDelivery(queryDto);
+  }
+
+  @Get('delivery/:deliveryId')
+  @ApiOperation({ summary: 'Obtener órdenes asignadas a un repartidor' })
+  @ApiResponse({ status: 200, description: 'Lista de órdenes obtenida exitosamente' })
+  @ApiParam({ name: 'deliveryId', description: 'ID del repartidor' })
+  @ApiQuery({ name: 'page', required: false, description: 'Número de página' })
+  @ApiQuery({ name: 'limit', required: false, description: 'Elementos por página' })
+  getDeliveryOrders(
+    @Param('deliveryId') deliveryId: string,
+    @Query() queryDto: PaginationDto
+  ) {
+    return this.ordersService.getDeliveryOrders(deliveryId, queryDto);
   }
 }

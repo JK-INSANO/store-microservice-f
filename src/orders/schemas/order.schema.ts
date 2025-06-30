@@ -4,11 +4,14 @@ import { Document } from 'mongoose';
 export type OrderDocument = Order & Document;
 
 export enum OrderStatus {
-  PENDING = 'pending',
-  PROCESSING = 'processing',
-  READY = 'ready',
-  DELIVERED = 'delivered',
-  CANCELLED = 'cancelled',
+  PENDING = 'PENDING',
+  CONFIRMED = 'CONFIRMED',
+  PREPARING = 'PREPARING',
+  READY_FOR_PICKUP = 'READY_FOR_PICKUP',
+  PICKED_UP = 'PICKED_UP',
+  IN_TRANSIT = 'IN_TRANSIT',
+  DELIVERED = 'DELIVERED',
+  CANCELLED = 'CANCELLED'
 }
 
 export enum DeliveryMethod {
@@ -72,6 +75,23 @@ export class Order {
 
   @Prop()
   notes?: string;
+
+  @Prop()
+  deliveryId?: string;
+
+  @Prop()
+  deliveryName?: string;
+
+  @Prop()
+  deliveryPhone?: string;
+
+  @Prop()
+  deliveryEmail?: string;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
+
+
+
+
+
