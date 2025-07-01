@@ -67,10 +67,16 @@ export class ProductsService {
   }
 
   async findOne(id: string): Promise<Product> {
+    console.log(`ProductsService.findOne - Buscando producto con ID: ${id}`);
+    
     const product = await this.productModel.findById(id).exec();
+    
     if (!product) {
+      console.log(`ProductsService.findOne - Producto no encontrado con ID: ${id}`);
       throw new NotFoundException(`Product with ID ${id} not found`);
     }
+    
+    console.log(`ProductsService.findOne - Producto encontrado: ${product.name}, Stock: ${product.stock}`);
     return product;
   }
 
@@ -80,15 +86,25 @@ export class ProductsService {
   }
 
   async update(id: string, updateProductDto: UpdateProductDto): Promise<Product> {
+    console.log(`ProductsService.update - ID: ${id}, Data:`, JSON.stringify(updateProductDto));
+    
+    // Verificar el producto antes de actualizar
+    const currentProduct = await this.productModel.findById(id).exec();
+    console.log(`Producto antes de actualizar - ID: ${id}, Stock actual: ${currentProduct?.stock}`);
+    
+    if (!currentProduct) {
+      throw new NotFoundException(`Product with ID ${id} not found`);
+    }
+    
     const updatedProduct = await this.productModel
       .findByIdAndUpdate(id, updateProductDto, { new: true })
       .exec();
     
-    if (!updatedProduct) {
-      throw new NotFoundException(`Product with ID ${id} not found`);
-    }
+    console.log(`Producto después de actualizar - ID: ${id}, Nuevo stock: ${updatedProduct?.stock}`);
     
-    return updatedProduct;
+    // The non-null assertion operator (!) tells TypeScript that we're certain
+    // updatedProduct is not null at this point (because we checked earlier)
+    return updatedProduct!;
   }
 
   async remove(id: string): Promise<void> {

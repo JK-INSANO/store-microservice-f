@@ -10,6 +10,6 @@ import { Product, ProductSchema } from './schemas/product.schema';
   ],
   controllers: [ProductsController],
   providers: [ProductsService],
-  exports: [ProductsService],
+  exports: [ProductsService], // Asegurarse de exportar el servicio
 })
 export class ProductsModule {}
